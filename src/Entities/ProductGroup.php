@@ -14,9 +14,9 @@ class ProductGroup
     protected string $name;
 
     /**
-     * @var string КодВПрограмме
+     * @var ?string КодВПрограмме
      */
-    protected string $code;
+    protected ?string $code = null;
 
     public function get(string $name): mixed
     {

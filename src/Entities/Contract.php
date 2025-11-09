@@ -2,6 +2,8 @@
 
 namespace MaxiStyle\EnterpriseData\Entities;
 
+use DateTimeInterface;
+
 /**
  * Сущность "Договор"
  * EnterpriseData: Договор
@@ -9,12 +11,22 @@ namespace MaxiStyle\EnterpriseData\Entities;
 class Contract
 {
     /**
-     * @var string Наименование
+     * @var ?string Наименование (обычно это номер и дата строкой)
      */
     protected ?string $name = null;
 
     /**
-     * @var string Вид договора
+     * @var ?DateTimeInterface Дата договора
+     */
+    protected ?DateTimeInterface $date = null;
+
+    /**
+     * @var ?string Номер договора
+     */
+    protected ?string $number = null;
+
+    /**
+     * @var string Вид договора (в билдерах заполняется автоматически)
      */
     protected string $contractType = 'СПокупателем';
 
@@ -34,7 +46,7 @@ class Contract
     protected Currency $currency;
 
     /**
-     * @var bool Расчеты в условных единицах
+     * @var string Расчеты в условных единицах (не рубли)
      */
     protected string $calculationsInConditionalUnits = 'false';
 

@@ -19,6 +19,7 @@ class DocumentGenerator
     private array $builders = [];
 
     public const DOCUMENT_TYPE_INVOICE_OUT = 'invoiceout';
+    public const DOCUMENT_TYPE_INVOICE_IN = 'invoicein';
 
     public function __construct(string $version = '1.6', string $format = null)
     {
@@ -91,14 +92,27 @@ class DocumentGenerator
         return $this->saveToFile($xml, $filename);
     }
 
+    /**
+     * Создаем массив сущностей и их билдеров
+     * @return void
+     */
     private function registerDefaultBuilders(): void
     {
         $this->registerBuilder(
             self::DOCUMENT_TYPE_INVOICE_OUT,
             new \MaxiStyle\EnterpriseData\Builders\InvoiceOutBuilder()
         );
+        $this->registerBuilder(
+            self::DOCUMENT_TYPE_INVOICE_IN,
+            new \MaxiStyle\EnterpriseData\Builders\InvoiceInBuilder()
+        );
     }
 
+    /**
+     * По классу объекта сущности определяем билдер
+     * @param object $document
+     * @return string
+     */
     private function getDocumentType(object $document): string
     {
         $class = get_class($document);
@@ -145,6 +159,9 @@ class DocumentGenerator
         $builder->build($dom, $body, $document);
     }
 
+    /**
+     * @throws DOMException
+     */
     protected function createElement(DOMDocument $dom, DOMElement $parent, string $name, string $value): DOMElement
     {
         $element = $dom->createElement(

@@ -3,3 +3,4 @@
 .idea/
 composer.lock
 CODE_STANDARDS_REPORT.md
+/examples/mag-*

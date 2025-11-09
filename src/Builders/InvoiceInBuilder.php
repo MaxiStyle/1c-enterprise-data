@@ -9,11 +9,11 @@ use DOMDocument;
 use DOMElement;
 
 /**
- * Конструктор "Счёт покупателю" или исходящий счёт
- * EnterpriseData: Документ.ЗаказКлиента
+ * Конструктор "Счёт от поставщика" или входящий счёт
+ * EnterpriseData: Документ.ЗаказПоставщику
  */
 
-class InvoiceOutBuilder extends DocumentBuilder implements DocumentBuilderInterface
+class InvoiceInBuilder extends DocumentBuilder implements DocumentBuilderInterface
 {
     /**
      * @throws DOMException
@@ -24,7 +24,7 @@ class InvoiceOutBuilder extends DocumentBuilder implements DocumentBuilderInterf
             throw new \InvalidArgumentException('Документ должен быть экземпляром Invoice');
         }
 
-        $document = $dom->createElement('Документ.ЗаказКлиента');
+        $document = $dom->createElement('Документ.ЗаказПоставщику');
 
         // КлючевыеСвойства
         $keyProps = $dom->createElement('КлючевыеСвойства');
@@ -71,7 +71,7 @@ class InvoiceOutBuilder extends DocumentBuilder implements DocumentBuilderInterf
         // Договор
         $contract = $dom->createElement('Договор');
         $ctr = $invoice->get('contract');
-        $contract->appendChild($dom->createElement('ВидДоговора', 'СПокупателем'));
+        $contract->appendChild($dom->createElement('ВидДоговора', 'СПоставщиком'));
         $this->append($dom, $contract, 'Дата', $ctr->get('date'));
         $this->append($dom, $contract, 'Номер', $ctr->get('number'));
 

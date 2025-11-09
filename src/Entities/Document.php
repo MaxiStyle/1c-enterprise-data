@@ -10,7 +10,7 @@ use DateTimeInterface;
 abstract class Document
 {
     /**
-     * @var DateTimeInterface Дата счёта
+     * @var ?DateTimeInterface Дата счёта
      */
     protected ?DateTimeInterface $date = null;
 
@@ -20,17 +20,17 @@ abstract class Document
     protected string $number;
 
     /**
-     * @var Organization КлючевыеСвойства.Организация
+     * @var ?Organization КлючевыеСвойства.Организация
      */
     protected ?Organization $organization = null;
 
     /**
-     * @var Currency Валюта счёта
+     * @var ?Currency Валюта счёта
      */
     protected ?Currency $currency = null;
 
     /**
-     * @var Organization Контрагент счёта
+     * @var ?Organization Контрагент счёта
      */
     protected ?Organization $counterparty = null;
 

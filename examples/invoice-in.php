@@ -15,15 +15,14 @@ $organization->set('name', 'Торговый дом "Комплексный" О�
     ->set('fullName', 'Общество с ограниченной ответственностью "Торговый дом "Комплексный"')
     ->set('inn', '7799434926')
     ->set('kpp', '779901001')
-;
+    ;
 
 // Контрагент
 $counterparty = new Entities\Organization();
-$counterparty->set('name', 'Этнопарк Перун')
-    ->set('shortName', 'ООО "Этнопарк "Перун"')
-    ->set('fullName', 'ООО "Этнопарк "Перун"')
-    ->set('inn', '5099891610')
-    ->set('kpp', '509901001')
+$counterparty->set('name', 'Конфетпром ООО')
+    ->set('fullName', 'ООО "Конфетпром"')
+    ->set('inn', '7799555550')
+    ->set('kpp', '779901001')
 ;
 
 // Валюта
@@ -32,7 +31,7 @@ $currency = new Entities\Currency();
 // ДанныеВзаиморасчетов
 // Договор
 $contract = new Entities\Contract();
-$contract->set('name', 'С покупателем - руб.')
+$contract->set('name', '7788/УЕ от 20.12.2014')
     ->set('organization', $organization)
     ->set('counterparty', $counterparty)
     ->set('currency', $currency)
@@ -112,7 +111,7 @@ $product2->set('nomenclature', $nomenclature2)
 
 
 // Весь документ
-$invoice = new Entities\InvoiceOut();
+$invoice = new Entities\InvoiceIn();
 $invoice->set('number', '0000-000524')
     ->set('date', new DateTime())
     ->set('organization', $organization)
@@ -129,7 +128,7 @@ $generator = new DocumentGenerator();
 
 try {
     $xml = $generator->generate($invoice);
-    $generator->saveToFile($xml, './examples/invoice-out.xml');
+    $generator->saveToFile($xml, './examples/invoice-in.xml');
 
     echo 'Счёт успешно сформирован';
 } catch (Exception\UnsupportedDocumentException|Exception\XMLGenerationException $e) {

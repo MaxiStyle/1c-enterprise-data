@@ -7,5 +7,5 @@ use DOMElement;
 
 interface DocumentBuilderInterface
 {
-    public function build(DOMDocument $dom, DOMElement $parent, object $document): void;
+    public function build(DOMDocument $dom, DOMElement $parent, object $object): void;
 }

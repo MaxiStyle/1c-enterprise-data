@@ -9,16 +9,6 @@ namespace MaxiStyle\EnterpriseData\Entities;
 class Product
 {
     /**
-     * @var Nomenclature Данные номенклатуры
-     */
-    protected Nomenclature $nomenclature;
-
-    /**
-     * @var UnitOfMeasure Единица измерения
-     */
-    protected UnitOfMeasure $unitOfMeasure;
-
-    /**
      * @var float Количество
      */
     protected float $quantity;
@@ -36,7 +26,7 @@ class Product
     /**
      * @var string СтавкаНДС
      */
-    protected string $vatRate;
+    protected string $vatRate = 'НДС20';
 
     /**
      * @var float СуммаНДС
@@ -44,9 +34,19 @@ class Product
     protected float $vatAmount;
 
     /**
-     * @var string ТипЗапасов
+     * @var ?string ТипЗапасов (например СобственныеТовары)
      */
-    protected string $stockType = 'СобственныеТовары';
+    protected ?string $stockType = null;
+
+    /**
+     * @var Nomenclature Данные номенклатуры
+     */
+    protected Nomenclature $nomenclature;
+
+    /**
+     * @var UnitOfMeasure Единица измерения
+     */
+    protected UnitOfMeasure $unitOfMeasure;
 
     public function get(string $name): mixed
     {

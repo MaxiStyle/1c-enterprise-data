@@ -9,17 +9,17 @@ namespace MaxiStyle\EnterpriseData\Entities;
 class Organization
 {
     /**
-     * @var string Наименование
+     * @var ?string Наименование
      */
     private ?string $name = null;
 
     /**
-     * @var string Наименование Сокращенное
+     * @var ?string Наименование Сокращенное
      */
     private ?string $shortName = null;
 
     /**
-     * @var string Наименование Полное
+     * @var ?string Наименование Полное
      */
     private ?string $fullName = null;
 
@@ -29,7 +29,7 @@ class Organization
     private string $inn;
 
     /**
-     * @var string КПП
+     * @var ?string КПП
      */
     private ?string $kpp = null;
 
