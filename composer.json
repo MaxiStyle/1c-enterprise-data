@@ -1,0 +1,29 @@
+{
+	"name": "maxistyle/1c-enterprise-data",
+	"description": "PHP library for generating 1C EnterpriseData XML format",
+	"type": "library",
+	"keywords": ["1c", "enterprisedata", "xml", "export"],
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "MaxiStyle",
+			"email": "tiranmax@yandex.ru"
+		}
+	],
+	"require": {
+		"php": ">=8.1",
+		"ext-dom": "*"
+	},
+	"minimum-stability": "stable",
+	"prefer-stable": true,	
+    "autoload": {
+        "psr-4": {
+            "MaxiStyle\\EnterpriseData\\": "src/"
+        }
+    },
+	"require-dev": {
+		"squizlabs/php_codesniffer": "3.7",
+		"phpstan/phpstan": "1.10",
+		"friendsofphp/php-cs-fixer": "3.15"
+	}
+}

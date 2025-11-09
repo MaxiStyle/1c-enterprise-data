@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<ruleset name="1C Enterprise Data PSR-12">
+    <description>PSR-12 coding standard for 1C Enterprise Data project</description>
+    
+    <arg name="extensions" value="php"/>
+    <arg name="tab-width" value="4"/>
+    <arg name="encoding" value="UTF-8"/>
+    
+    <!-- Base rules -->
+    <rule ref="PSR12"/>
+    
+    <!-- Additional rules -->
+    <rule name="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="0"/>
+        </properties>
+    </rule>
+    
+    <!-- Exclude vendor directory -->
+    <exclude-pattern>vendor/*</exclude-pattern>
+</ruleset>

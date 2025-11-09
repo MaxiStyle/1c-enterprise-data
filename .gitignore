@@ -1,0 +1,5 @@
+/vendor/
+.osp/
+.idea/
+composer.lock
+CODE_STANDARDS_REPORT.md
