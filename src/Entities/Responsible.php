@@ -3,30 +3,14 @@
 namespace MaxiStyle\EnterpriseData\Entities;
 
 /**
- * Сущность "Номенклатура"
- * EnterpriseData: Номенклатура
+ * Сущность "Ответственный"
  */
-class Nomenclature
+class Responsible
 {
-    /**
-     * @var ?string НаименованиеПолное
-     */
-    protected ?string $fullName = null;
-
-    /**
-     * @var ?string КодВПрограмме
-     */
-    protected ?string $code = null;
-
     /**
      * @var ?string Наименование
      */
     protected ?string $name = null;
-
-    /**
-     * @var ?ProductGroup Группа
-     */
-    protected ?ProductGroup $group = null;
 
     public function get(string $name): mixed
     {

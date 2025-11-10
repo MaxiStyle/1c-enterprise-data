@@ -44,6 +44,14 @@ class InvoiceOutBuilder extends DocumentBuilder implements DocumentBuilderInterf
 
         $document->appendChild($keyProps);
 
+        // Ответственный
+        if ($invoice->get('responsible') !== null) {
+            $responsible = $dom->createElement('Ответственный');
+            $res = $invoice->get('responsible');
+            $this->append($dom, $responsible, 'Наименование', $res->get('name'));
+            $document->appendChild($responsible);
+        }
+
         // Валюта
         $currency = $dom->createElement('Валюта');
         $cur = $invoice->get('currency');
@@ -63,61 +71,71 @@ class InvoiceOutBuilder extends DocumentBuilder implements DocumentBuilderInterf
         $this->append($dom, $counterparty, 'ИНН', $org->get('inn'));
         $this->append($dom, $counterparty, 'КПП', $org->get('kpp'));
         $this->append($dom, $counterparty, 'ЮридическоеФизическоеЛицо', $org->get('type'));
+        if ($org->get('countryRegistrationCode') !== null || $org->get('countryRegistrationName') !== null) {
+            $countryRegistration = $dom->createElement('СтранаРегистрации');
+            $this->append($dom, $countryRegistration, 'Код', $org->get('countryRegistrationCode'));
+            $this->append($dom, $countryRegistration, 'Наименование', $org->get('countryRegistrationName'));
+            $counterparty->appendChild($countryRegistration);
+        }
         $document->appendChild($counterparty);
 
         // ДанныеВзаиморасчетов
-        $paymentData = $dom->createElement('ДанныеВзаиморасчетов');
+        if ($invoice->get('contract') !== null) {
+            $paymentData = $dom->createElement('ДанныеВзаиморасчетов');
 
-        // Договор
-        $contract = $dom->createElement('Договор');
-        $ctr = $invoice->get('contract');
-        $contract->appendChild($dom->createElement('ВидДоговора', 'СПокупателем'));
-        $this->append($dom, $contract, 'Дата', $ctr->get('date'));
-        $this->append($dom, $contract, 'Номер', $ctr->get('number'));
+            // Договор
+            $contract = $dom->createElement('Договор');
+            $ctr = $invoice->get('contract');
+            $contract->appendChild($dom->createElement('ВидДоговора', 'СПокупателем'));
 
-        // Организация в договоре
-        $contractOrg = $dom->createElement('Организация');
-        $org = $invoice->get('organization');
-        $this->append($dom, $contractOrg, 'Наименование', $org->get('name'));
-        $this->append($dom, $contractOrg, 'НаименованиеСокращенное', $org->get('shortName'));
-        $this->append($dom, $contractOrg, 'НаименованиеПолное', $org->get('fullName'));
-        $this->append($dom, $contractOrg, 'ИНН', $org->get('inn'));
-        $this->append($dom, $contractOrg, 'КПП', $org->get('kpp'));
-        $this->append($dom, $contractOrg, 'ЮридическоеФизическоеЛицо', $org->get('type'));
-        $contract->appendChild($contractOrg);
+            // Организация в договоре
+            $contractOrg = $dom->createElement('Организация');
+            $org = $invoice->get('organization');
+            $this->append($dom, $contractOrg, 'Наименование', $org->get('name'));
+            $this->append($dom, $contractOrg, 'НаименованиеСокращенное', $org->get('shortName'));
+            $this->append($dom, $contractOrg, 'НаименованиеПолное', $org->get('fullName'));
+            $this->append($dom, $contractOrg, 'ИНН', $org->get('inn'));
+            $this->append($dom, $contractOrg, 'КПП', $org->get('kpp'));
+            $this->append($dom, $contractOrg, 'ЮридическоеФизическоеЛицо', $org->get('type'));
+            $contract->appendChild($contractOrg);
 
-        // Контрагент в договоре
-        $contractCounterparty = $dom->createElement('Контрагент');
-        $org = $invoice->get('counterparty');
-        $this->append($dom, $contractCounterparty, 'Наименование', $org->get('name'));
-        $this->append($dom, $contractCounterparty, 'НаименованиеПолное', $org->get('fullName'));
-        $this->append($dom, $contractCounterparty, 'ИНН', $org->get('inn'));
-        $this->append($dom, $contractCounterparty, 'КПП', $org->get('kpp'));
-        $this->append($dom, $contractCounterparty, 'ЮридическоеФизическоеЛицо', $org->get('type'));
-        $contract->appendChild($contractCounterparty);
+            // Контрагент в договоре
+            $contractCounterparty = $dom->createElement('Контрагент');
+            $org = $invoice->get('counterparty');
+            $this->append($dom, $contractCounterparty, 'Наименование', $org->get('name'));
+            $this->append($dom, $contractCounterparty, 'НаименованиеПолное', $org->get('fullName'));
+            $this->append($dom, $contractCounterparty, 'ИНН', $org->get('inn'));
+            $this->append($dom, $contractCounterparty, 'КПП', $org->get('kpp'));
+            $this->append($dom, $contractCounterparty, 'ЮридическоеФизическоеЛицо', $org->get('type'));
+            $contract->appendChild($contractCounterparty);
 
-        // ВалютаВзаиморасчетов
-        $contractCurrency = $dom->createElement('ВалютаВзаиморасчетов');
-        $cur = $invoice->get('currency');
-        $this->append($dom, $contractCurrency, 'Код', $cur->get('code'));
-        $this->append($dom, $contractCurrency, 'Наименование', $cur->get('name'));
-        $contract->appendChild($contractCurrency);
+            // ВалютаВзаиморасчетов
+            $contractCurrency = $dom->createElement('ВалютаВзаиморасчетов');
+            $cur = $invoice->get('currency');
+            $this->append($dom, $contractCurrency, 'Код', $cur->get('code'));
+            $this->append($dom, $contractCurrency, 'Наименование', $cur->get('name'));
+            $contract->appendChild($contractCurrency);
 
-        // Свойства договора
-        $this->append($dom, $contract, 'РасчетыВУсловныхЕдиницах', $ctr->get('calculationsInConditionalUnits'));
-        $this->append($dom, $contract, 'Наименование', $ctr->get('name'));
+            // Свойства договора
+            $this->append($dom, $contract, 'РасчетыВУсловныхЕдиницах', $ctr->get('calculationsInConditionalUnits'));
+            $this->append($dom, $contract, 'Наименование', $ctr->get('name'));
+            $this->append($dom, $contract, 'Дата', $ctr->get('date'));
+            $this->append($dom, $contract, 'Номер', $ctr->get('number'));
 
-        $paymentData->appendChild($contract);
+            $paymentData->appendChild($contract);
 
-        // ВалютаВзаиморасчетов (дублирование на уровне ДанныеВзаиморасчетов)
-        $paymentCurrency = $dom->createElement('ВалютаВзаиморасчетов');
-        $this->append($dom, $paymentCurrency, 'Код', $cur->get('code'));
-        $this->append($dom, $paymentCurrency, 'Наименование', $cur->get('name'));
-        $paymentData->appendChild($paymentCurrency);
+            // ВалютаВзаиморасчетов (дублирование на уровне ДанныеВзаиморасчетов)
+            $paymentCurrency = $dom->createElement('ВалютаВзаиморасчетов');
+            $this->append($dom, $paymentCurrency, 'Код', $cur->get('code'));
+            $this->append($dom, $paymentCurrency, 'Наименование', $cur->get('name'));
+            $paymentData->appendChild($paymentCurrency);
 
-        $this->append($dom, $paymentData, 'РасчетыВУсловныхЕдиницах', $ctr->get('calculationsInConditionalUnits'));
+            $this->append($dom, $paymentData, 'КурсВзаиморасчетов', $ctr->get('mutualSettlementRate'));
+            $this->append($dom, $paymentData, 'КратностьВзаиморасчетов', $ctr->get('multiplicityMutualSettlements'));
+            $this->append($dom, $paymentData, 'РасчетыВУсловныхЕдиницах', $ctr->get('calculationsInConditionalUnits'));
 
-        $document->appendChild($paymentData);
+            $document->appendChild($paymentData);
+        }
 
         // БанковскийСчетОрганизации
         if ($invoice->get('bankAccount') !== null) {
@@ -199,6 +217,34 @@ class InvoiceOutBuilder extends DocumentBuilder implements DocumentBuilderInterf
             }
 
             $document->appendChild($products);
+        }
+
+        // Услуги
+        if (!empty($invoice->get('services'))) {
+            $services = $dom->createElement('Услуги');
+
+            foreach ($invoice->get('services') as $service) {
+                $line = $dom->createElement('Строка');
+
+                // Номенклатура
+                $nomenclature = $dom->createElement('Номенклатура');
+                $nomenclatureEntity = $service->get('nomenclature');
+                $this->append($dom, $nomenclature, 'НаименованиеПолное', $nomenclatureEntity->get('fullName'));
+                $this->append($dom, $nomenclature, 'КодВПрограмме', $nomenclatureEntity->get('code'));
+                $this->append($dom, $nomenclature, 'Наименование', $nomenclatureEntity->get('name'));
+                $line->appendChild($nomenclature);
+
+                // Остальные поля
+                $this->append($dom, $line, 'Количество', $service->get('quantity'));
+                $this->append($dom, $line, 'Сумма', $service->get('amount'));
+                $this->append($dom, $line, 'Цена', $service->get('price'));
+                $this->append($dom, $line, 'СтавкаНДС', $service->get('vatRate'));
+                $this->append($dom, $line, 'СуммаНДС', $service->get('vatAmount'));
+                $this->append($dom, $line, 'Содержание', $service->get('description'));
+
+                $services->appendChild($line);
+            }
+            $document->appendChild($services);
         }
 
         $parent->appendChild($document);

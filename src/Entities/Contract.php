@@ -16,9 +16,9 @@ class Contract
     protected ?string $name = null;
 
     /**
-     * @var ?DateTimeInterface Дата договора
+     * @var ?string Дата договора (гггг-мм-дд)
      */
-    protected ?DateTimeInterface $date = null;
+    protected ?string $date = null;
 
     /**
      * @var ?string Номер договора
@@ -49,6 +49,16 @@ class Contract
      * @var string Расчеты в условных единицах (не рубли)
      */
     protected string $calculationsInConditionalUnits = 'false';
+
+    /**
+     * @var float|int Курс Взаиморасчетов, который используется для расчета в иностранной валюте,
+     */
+    protected float|int $mutualSettlementRate = 1;
+
+    /**
+     * @var int Кратность Взаиморасчетов, сколько единиц одной валюты соответствует одной единице другой (например, 100 иен = 1 рубль)
+     */
+    protected int $multiplicityMutualSettlements = 1;
 
     public function get(string $name): mixed
     {

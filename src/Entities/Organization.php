@@ -11,32 +11,42 @@ class Organization
     /**
      * @var ?string Наименование
      */
-    private ?string $name = null;
+    protected ?string $name = null;
 
     /**
      * @var ?string Наименование Сокращенное
      */
-    private ?string $shortName = null;
+    protected ?string $shortName = null;
 
     /**
      * @var ?string Наименование Полное
      */
-    private ?string $fullName = null;
+    protected ?string $fullName = null;
 
     /**
      * @var string ИНН
      */
-    private string $inn;
+    protected string $inn;
 
     /**
      * @var ?string КПП
      */
-    private ?string $kpp = null;
+    protected ?string $kpp = null;
 
     /**
      * @var string Юридическое или Физическое Лицо (обязательно)
      */
-    private string $type = 'ЮридическоеЛицо';
+    protected string $type = 'ЮридическоеЛицо';
+
+    /**
+     * @var ?string Страна Регистрации Код
+     */
+    protected ?string $countryRegistrationCode = null;
+
+    /**
+     * @var ?string Страна Регистрации Наименование
+     */
+    protected ?string $countryRegistrationName = null;
 
     public function get(string $name): mixed
     {

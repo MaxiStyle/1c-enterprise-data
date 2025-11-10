@@ -10,14 +10,19 @@ use DateTimeInterface;
 abstract class Document
 {
     /**
-     * @var ?DateTimeInterface Дата счёта
+     * @var ?DateTimeInterface Дата документа
      */
     protected ?DateTimeInterface $date = null;
 
     /**
-     * @var string Номер счёта
+     * @var string Номер документа
      */
     protected string $number;
+
+    /**
+     * @var ?Responsible Ответственный
+     */
+    protected ?Responsible $responsible = null;
 
     /**
      * @var ?Organization КлючевыеСвойства.Организация

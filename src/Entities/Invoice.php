@@ -31,9 +31,14 @@ class Invoice extends Document
     protected ?BankAccount $bankAccount = null;
 
     /**
-     * @var InvoiceProduct[] Товары
+     * @var array Товары
      */
     protected array $products = [];
+
+    /**
+     * @var array Услуги
+     */
+    protected array $services = [];
 
     public function get(string $name): mixed
     {

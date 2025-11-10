@@ -24,10 +24,17 @@ $counterparty->set('name', 'Этнопарк Перун')
     ->set('fullName', 'ООО "Этнопарк "Перун"')
     ->set('inn', '5099891610')
     ->set('kpp', '509901001')
+    ->set('countryRegistrationCode', '643')
+    ->set('countryRegistrationName', 'РОССИЯ')
 ;
 
 // Валюта
 $currency = new Entities\Currency();
+
+// Ответственный
+$responsible = new Entities\Responsible();
+$responsible->set('name', 'Иванов Иван Иванович');
+
 
 // ДанныеВзаиморасчетов
 // Договор
@@ -36,7 +43,10 @@ $contract->set('name', 'С покупателем - руб.')
     ->set('organization', $organization)
     ->set('counterparty', $counterparty)
     ->set('currency', $currency)
-    ->set('calculationsInConditionalUnits', 'false');
+    ->set('calculationsInConditionalUnits', 'false')
+    ->set('date', '2022-01-31')
+    ->set('number', 'У/0008/БМ')
+;
 
 // Банк
 $bank = new Entities\Bank();
@@ -117,6 +127,7 @@ $invoice->set('number', '0000-000524')
     ->set('date', new DateTime())
     ->set('organization', $organization)
     ->set('currency', $currency)
+    ->set('responsible', $responsible)
     ->set('amount', 2010)
     ->set('amountIncludesVat', 'true')
     ->set('counterparty', $counterparty)
