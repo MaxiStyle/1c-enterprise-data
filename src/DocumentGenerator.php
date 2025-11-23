@@ -41,20 +41,23 @@ class DocumentGenerator
     /**
      * Generate XML for document
      *
-     * @param object $document
+     * @param object|array $documents Single document or array of documents
      * @return string
      * @throws XMLGenerationException|UnsupportedDocumentException
      */
-    public function generate(object $document): string
+    public function generate(object|array $documents): string
     {
-        $documentType = $this->getDocumentType($document);
+        $documentsArray = is_array($documents) ? $documents : [$documents];
 
-        if (!isset($this->builders[$documentType])) {
-            throw new UnsupportedDocumentException("No builder registered for document type: {$documentType}");
+        // Validate all documents have registered builders
+        foreach ($documentsArray as $document) {
+            $documentType = $this->getDocumentType($document);
+            if (!isset($this->builders[$documentType])) {
+                throw new UnsupportedDocumentException("No builder registered for document type: {$documentType}");
+            }
         }
 
         try {
-            $builder = $this->builders[$documentType];
             $dom = new DOMDocument('1.0', 'utf-8');
             $dom->formatOutput = true;
 
@@ -65,7 +68,7 @@ class DocumentGenerator
             $dom->appendChild($message);
 
             $this->addHeader($dom, $message);
-            $this->addBody($dom, $message, $document, $builder);
+            $this->addBody($dom, $message, $documentsArray);
 
             return $dom->saveXML();
         } catch (\Exception $e) {
@@ -84,11 +87,11 @@ class DocumentGenerator
     }
 
     /**
-     * Generate and save document to file
+     * Generate and save document(s) to file
      */
-    public function generateToFile(object $document, string $filename): bool
+    public function generateToFile(object|array $documents, string $filename): bool
     {
-        $xml = $this->generate($document);
+        $xml = $this->generate($documents);
         return $this->saveToFile($xml, $filename);
     }
 
@@ -149,14 +152,17 @@ class DocumentGenerator
     private function addBody(
         DOMDocument $dom,
         DOMElement $parent,
-        object $document,
-        DocumentBuilderInterface $builder
+        array $documents
     ): void {
         $body = $dom->createElement('Body');
         $body->setAttribute('xmlns', $this->format);
         $parent->appendChild($body);
 
-        $builder->build($dom, $body, $document);
+        foreach ($documents as $document) {
+            $documentType = $this->getDocumentType($document);
+            $builder = $this->builders[$documentType];
+            $builder->build($dom, $body, $document);
+        }
     }
 
     /**
