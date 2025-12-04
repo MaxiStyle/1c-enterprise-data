@@ -137,6 +137,12 @@ class InvoiceInBuilder extends DocumentBuilder implements DocumentBuilderInterfa
             $document->appendChild($paymentData);
         }
 
+        // СуммаВключаетНДС
+        if ($invoice->get('amountIncludesVat') === true) {
+            $amountIncludesVat = $dom->createElement('СуммаВключаетНДС', 'true');
+            $document->appendChild($amountIncludesVat);
+        }
+
         // БанковскийСчетОрганизации
         if ($invoice->get('bankAccount') !== null) {
             $bankAccount = $dom->createElement('БанковскийСчетОрганизации');
@@ -184,6 +190,7 @@ class InvoiceInBuilder extends DocumentBuilder implements DocumentBuilderInterfa
                 $nomenclature = $dom->createElement('Номенклатура');
 
                 $nomenclatureEntity = $product->get('nomenclature');
+                $this->append($dom, $nomenclature, 'Ссылка', $nomenclatureEntity->get('link'));
                 $this->append($dom, $nomenclature, 'НаименованиеПолное', $nomenclatureEntity->get('fullName'));
                 $this->append($dom, $nomenclature, 'КодВПрограмме', $nomenclatureEntity->get('code'));
                 $this->append($dom, $nomenclature, 'Наименование', $nomenclatureEntity->get('name'));
@@ -217,6 +224,35 @@ class InvoiceInBuilder extends DocumentBuilder implements DocumentBuilderInterfa
             }
 
             $document->appendChild($products);
+        }
+
+        // Услуги
+        if (!empty($invoice->get('services'))) {
+            $services = $dom->createElement('Услуги');
+
+            foreach ($invoice->get('services') as $service) {
+                $line = $dom->createElement('Строка');
+
+                // Номенклатура
+                $nomenclature = $dom->createElement('Номенклатура');
+                $nomenclatureEntity = $service->get('nomenclature');
+                $this->append($dom, $nomenclature, 'Ссылка', $nomenclatureEntity->get('link'));
+                $this->append($dom, $nomenclature, 'НаименованиеПолное', $nomenclatureEntity->get('fullName'));
+                $this->append($dom, $nomenclature, 'КодВПрограмме', $nomenclatureEntity->get('code'));
+                $this->append($dom, $nomenclature, 'Наименование', $nomenclatureEntity->get('name'));
+                $line->appendChild($nomenclature);
+
+                // Остальные поля
+                $this->append($dom, $line, 'Количество', $service->get('quantity'));
+                $this->append($dom, $line, 'Сумма', $service->get('amount'));
+                $this->append($dom, $line, 'Цена', $service->get('price'));
+                $this->append($dom, $line, 'СтавкаНДС', $service->get('vatRate'));
+                $this->append($dom, $line, 'СуммаНДС', $service->get('vatAmount'));
+                $this->append($dom, $line, 'Содержание', $service->get('description'));
+
+                $services->appendChild($line);
+            }
+            $document->appendChild($services);
         }
 
         $parent->appendChild($document);

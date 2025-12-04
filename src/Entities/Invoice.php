@@ -18,7 +18,7 @@ class Invoice extends Document
     /**
      * @var string СуммаВключаетНДС
      */
-    protected string $amountIncludesVat = 'true';
+    protected bool $amountIncludesVat = true;
 
     /**
      * @var ?Contract Данные взаиморасчетов

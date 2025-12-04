@@ -137,6 +137,12 @@ class InvoiceOutBuilder extends DocumentBuilder implements DocumentBuilderInterf
             $document->appendChild($paymentData);
         }
 
+        // СуммаВключаетНДС
+        if ($invoice->get('amountIncludesVat') === true) {
+            $amountIncludesVat = $dom->createElement('СуммаВключаетНДС', 'true');
+            $document->appendChild($amountIncludesVat);
+        }
+
         // БанковскийСчетОрганизации
         if ($invoice->get('bankAccount') !== null) {
             $bankAccount = $dom->createElement('БанковскийСчетОрганизации');
@@ -184,6 +190,7 @@ class InvoiceOutBuilder extends DocumentBuilder implements DocumentBuilderInterf
                 $nomenclature = $dom->createElement('Номенклатура');
 
                 $nomenclatureEntity = $product->get('nomenclature');
+                $this->append($dom, $nomenclature, 'Ссылка', $nomenclatureEntity->get('link'));
                 $this->append($dom, $nomenclature, 'НаименованиеПолное', $nomenclatureEntity->get('fullName'));
                 $this->append($dom, $nomenclature, 'КодВПрограмме', $nomenclatureEntity->get('code'));
                 $this->append($dom, $nomenclature, 'Наименование', $nomenclatureEntity->get('name'));
@@ -229,6 +236,7 @@ class InvoiceOutBuilder extends DocumentBuilder implements DocumentBuilderInterf
                 // Номенклатура
                 $nomenclature = $dom->createElement('Номенклатура');
                 $nomenclatureEntity = $service->get('nomenclature');
+                $this->append($dom, $nomenclature, 'Ссылка', $nomenclatureEntity->get('link'));
                 $this->append($dom, $nomenclature, 'НаименованиеПолное', $nomenclatureEntity->get('fullName'));
                 $this->append($dom, $nomenclature, 'КодВПрограмме', $nomenclatureEntity->get('code'));
                 $this->append($dom, $nomenclature, 'Наименование', $nomenclatureEntity->get('name'));

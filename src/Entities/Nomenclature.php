@@ -19,6 +19,11 @@ class Nomenclature
     protected ?string $code = null;
 
     /**
+     * @var ?string Ссылка
+     */
+    protected ?string $link = null;
+
+    /**
      * @var ?string Наименование
      */
     protected ?string $name = null;

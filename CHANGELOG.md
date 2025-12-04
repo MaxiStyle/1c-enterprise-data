@@ -7,6 +7,29 @@
 
 ## [Unreleased]
 
+## [1.1.2] - 2025-12-04
+
+### Fixed
+- Исправлены баги в генерации XML документов
+
+## [1.1.1] - 2025-11-23
+
+### Added
+- Поддержка генерации XML с несколькими документами в одном Body
+- Новый метод генерации для массива документов: `$generator->generate([$doc1, $doc2])`
+- Пример использования множественных документов в `examples/invoice-out-multiple.php`
+
+### Fixed
+- Исправлены ошибки в DocumentGenerator при работе с несколькими документами
+- Улучшена обработка ошибок валидации документов
+- Оптимизирована архитектура для поддержки множественных документов
+
+### Technical
+- DocumentGenerator.php реорганизован для поддержки union types (object|array)
+- Добавлена валидация всех документов в массиве перед генерацией
+- Сохранена полная обратная совместимость с существующим API
+- Все изменения протестированы и проверены на синтаксические ошибки
+
 ## [1.1.0] - 2025-11-09
 
 ### Added
@@ -36,6 +59,8 @@
 - Инструменты качества кода: PHP_CodeSniffer, PHPStan, PHP-CS-Fixer
 - Лицензия MIT
 
-[Unreleased]: https://github.com/maxistyle/1c-enterprise-data/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/maxistyle/1c-enterprise-data/compare/v1.1.2...HEAD
+[1.1.2]: https://github.com/maxistyle/1c-enterprise-data/releases/tag/v1.1.2
+[1.1.1]: https://github.com/maxistyle/1c-enterprise-data/releases/tag/v1.1.1
 [1.1.0]: https://github.com/maxistyle/1c-enterprise-data/releases/tag/v1.1.0
 [1.0.0]: https://github.com/maxistyle/1c-enterprise-data/releases/tag/v1.0.0
