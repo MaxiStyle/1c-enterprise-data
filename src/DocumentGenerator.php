@@ -16,6 +16,7 @@ class DocumentGenerator
 {
     private string $version;
     private string $format;
+    /** @var array<string, DocumentBuilderInterface> */
     private array $builders = [];
 
     public const DOCUMENT_TYPE_INVOICE_OUT = 'invoiceout';
@@ -41,7 +42,7 @@ class DocumentGenerator
     /**
      * Generate XML for document
      *
-     * @param object|array $documents Single document or array of documents
+     * @param object|array<object> $documents Single document or array of documents
      * @return string
      * @throws XMLGenerationException|UnsupportedDocumentException
      */
@@ -70,7 +71,11 @@ class DocumentGenerator
             $this->addHeader($dom, $message);
             $this->addBody($dom, $message, $documentsArray);
 
-            return $dom->saveXML();
+            $xml = $dom->saveXML();
+            if ($xml === false) {
+                throw new XMLGenerationException('Failed to generate XML string');
+            }
+            return $xml;
         } catch (\Exception $e) {
             throw new XMLGenerationException('XML generation failed: ' . $e->getMessage(), 0, $e);
         }
@@ -88,6 +93,7 @@ class DocumentGenerator
 
     /**
      * Generate and save document(s) to file
+     * @param object|array<object> $documents Single document or array of documents
      */
     public function generateToFile(object|array $documents, string $filename): bool
     {
@@ -147,6 +153,7 @@ class DocumentGenerator
     }
 
     /**
+     * @param array<object> $documents
      * @throws DOMException
      */
     private function addBody(

@@ -51,12 +51,14 @@ class Contract
     protected string $calculationsInConditionalUnits = 'false';
 
     /**
-     * @var float|int Курс Взаиморасчетов, который используется для расчета в иностранной валюте,
+     * @var float|int Курс Взаиморасчетов, который используется для расчета
+     * в иностранной валюте
      */
     protected float|int $mutualSettlementRate = 1;
 
     /**
-     * @var int Кратность Взаиморасчетов, сколько единиц одной валюты соответствует одной единице другой (например, 100 иен = 1 рубль)
+     * @var int Кратность Взаиморасчетов, сколько единиц одной валюты
+     * соответствует одной единице другой (например, 100 иен = 1 рубль)
      */
     protected int $multiplicityMutualSettlements = 1;
 

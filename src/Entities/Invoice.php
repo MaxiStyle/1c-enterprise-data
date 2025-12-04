@@ -16,7 +16,7 @@ class Invoice extends Document
     protected float $amount;
 
     /**
-     * @var string СуммаВключаетНДС
+     * @var bool СуммаВключаетНДС
      */
     protected bool $amountIncludesVat = true;
 
@@ -31,12 +31,12 @@ class Invoice extends Document
     protected ?BankAccount $bankAccount = null;
 
     /**
-     * @var array Товары
+     * @var array<int, mixed> Товары
      */
     protected array $products = [];
 
     /**
-     * @var array Услуги
+     * @var array<int, mixed> Услуги
      */
     protected array $services = [];
 
