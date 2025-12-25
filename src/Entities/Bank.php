@@ -28,6 +28,11 @@ class Bank
      */
     protected ?string $swift = null;
 
+    /**
+     * @var ?string Ссылка (UUID)
+     */
+    protected ?string $link = null;
+
     public function get(string $name): mixed
     {
         if (!property_exists($this, $name)) {

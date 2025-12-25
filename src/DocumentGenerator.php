@@ -21,8 +21,10 @@ class DocumentGenerator
 
     public const DOCUMENT_TYPE_INVOICE_OUT = 'invoiceout';
     public const DOCUMENT_TYPE_INVOICE_IN = 'invoicein';
+    public const DOCUMENT_TYPE_ACT_OUT = 'actout';
+    public const DOCUMENT_TYPE_ACT_IN = 'actin';
 
-    public function __construct(string $version = '1.6', string $format = null)
+    public function __construct(string $version = '1.3', string $format = null)
     {
         $this->version = $version;
         $this->format = $format ?: "http://v8.1c.ru/edi/edi_stnd/EnterpriseData/{$version}";
@@ -114,6 +116,14 @@ class DocumentGenerator
         $this->registerBuilder(
             self::DOCUMENT_TYPE_INVOICE_IN,
             new \MaxiStyle\EnterpriseData\Builders\InvoiceInBuilder()
+        );
+        $this->registerBuilder(
+            self::DOCUMENT_TYPE_ACT_OUT,
+            new \MaxiStyle\EnterpriseData\Builders\ActOutBuilder()
+        );
+        $this->registerBuilder(
+            self::DOCUMENT_TYPE_ACT_IN,
+            new \MaxiStyle\EnterpriseData\Builders\ActInBuilder()
         );
     }
 

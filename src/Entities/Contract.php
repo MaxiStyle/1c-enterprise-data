@@ -26,9 +26,9 @@ class Contract
     protected ?string $number = null;
 
     /**
-     * @var string Вид договора (в билдерах заполняется автоматически)
+     * @var ?string Вид договора (например СПокупателем)
      */
-    protected string $contractType = 'СПокупателем';
+    protected ?string $contractType = null;
 
     /**
      * @var Organization Организация
@@ -61,6 +61,11 @@ class Contract
      * соответствует одной единице другой (например, 100 иен = 1 рубль)
      */
     protected int $multiplicityMutualSettlements = 1;
+
+    /**
+     * @var ?string Ссылка (UUID)
+     */
+    protected ?string $link = null;
 
     public function get(string $name): mixed
     {

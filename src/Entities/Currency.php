@@ -18,6 +18,11 @@ class Currency
      */
     protected string $name = 'руб.';
 
+    /**
+     * @var ?string Ссылка на валюту (UUID)
+     */
+    protected ?string $link = null;
+
     public function get(string $name): mixed
     {
         if (!property_exists($this, $name)) {

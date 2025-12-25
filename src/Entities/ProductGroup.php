@@ -4,19 +4,24 @@ namespace MaxiStyle\EnterpriseData\Entities;
 
 /**
  * Сущность "Группа номенклатуры"
- * EnterpriseData: Товары.Строка.ДанныеНоменклатуры.Номенклатура.Группа
+ * EnterpriseData: Группа
  */
 class ProductGroup
 {
     /**
-     * @var string Наименование
+     * @var ?string Наименование
      */
-    protected string $name;
+    protected ?string $name = null;
 
     /**
-     * @var ?string КодВПрограмме
+     * @var ?string Код
      */
     protected ?string $code = null;
+
+    /**
+     * @var ?string Ссылка на группу (UUID)
+     */
+    protected ?string $link = null;
 
     public function get(string $name): mixed
     {

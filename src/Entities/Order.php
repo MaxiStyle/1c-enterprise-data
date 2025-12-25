@@ -2,29 +2,31 @@
 
 namespace MaxiStyle\EnterpriseData\Entities;
 
+use DateTimeInterface;
+
 /**
- * Сущность "Банковский счет организации"
- * EnterpriseData: БанковскийСчетОрганизации
+ * Сущность "Заказ"
+ * EnterpriseData: Заказ
  */
-class BankAccount
+class Order
 {
     /**
-     * @var string Номер счета
+     * @var ?DateTimeInterface Дата
      */
-    private string $accountNumber;
+    protected ?DateTimeInterface $date = null;
 
     /**
-     * @var Bank Банк
+     * @var string Номер
      */
-    private Bank $bank;
+    protected string $number;
 
     /**
-     * @var Organization Владелец (организация)
+     * @var ?Organization Организация
      */
-    private Organization $owner;
+    protected ?Organization $organization = null;
 
     /**
-     * @var ?string Ссылка (UUID)
+     * @var ?string Ссылка на Склад (UUID)
      */
     protected ?string $link = null;
 

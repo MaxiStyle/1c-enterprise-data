@@ -18,6 +18,11 @@ class UnitOfMeasure
      */
     protected ?string $name = null;
 
+    /**
+     * @var ?string Ссылка на единицу измерения (UUID)
+     */
+    protected ?string $link = null;
+
     public function get(string $name): mixed
     {
         if (!property_exists($this, $name)) {

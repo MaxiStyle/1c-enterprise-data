@@ -18,10 +18,7 @@ class Nomenclature
      */
     protected ?string $code = null;
 
-    /**
-     * @var ?string Ссылка
-     */
-    protected ?string $link = null;
+    
 
     /**
      * @var ?string Наименование
@@ -32,6 +29,11 @@ class Nomenclature
      * @var ?ProductGroup Группа
      */
     protected ?ProductGroup $group = null;
+
+    /**
+     * @var ?string Ссылка на номенклатуру (UUID)
+     */
+    protected ?string $link = null;
 
     public function get(string $name): mixed
     {

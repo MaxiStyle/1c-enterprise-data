@@ -3,28 +3,23 @@
 namespace MaxiStyle\EnterpriseData\Entities;
 
 /**
- * Сущность "Банковский счет организации"
- * EnterpriseData: БанковскийСчетОрганизации
+ * Сущность "Склад"
+ * EnterpriseData: Склад
  */
-class BankAccount
+class Warehouse
 {
     /**
-     * @var string Номер счета
+     * @var ?string Наименование
      */
-    private string $accountNumber;
+    protected ?string $name = null;
 
     /**
-     * @var Bank Банк
+     * @var ?string Тип Склада
      */
-    private Bank $bank;
+    protected ?string $type = null;
 
     /**
-     * @var Organization Владелец (организация)
-     */
-    private Organization $owner;
-
-    /**
-     * @var ?string Ссылка (UUID)
+     * @var ?string Ссылка на Склад (UUID)
      */
     protected ?string $link = null;
 
