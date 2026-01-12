@@ -24,19 +24,19 @@ class Service
     protected float $price;
 
     /**
-     * @var string СтавкаНДС
+     * @var ?string СтавкаНДС
      */
-    protected string $vatRate = 'НДС20';
+    protected ?string $vatRate = null;
 
     /**
-     * @var float СуммаНДС
+     * @var ?float СуммаНДС
      */
-    protected float $vatAmount;
+    protected ?float $vatAmount = null;
 
     /**
-     * @var string Содержание (полное описание услуги)
+     * @var ?string Содержание (полное описание услуги)
      */
-    protected string $description;
+    protected ?string $description = null;
 
     /**
      * @var ?Nomenclature Данные номенклатуры
