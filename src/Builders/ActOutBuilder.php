@@ -184,14 +184,13 @@ class ActOutBuilder extends DocumentBuilder implements DocumentBuilderInterface
 
         // ВалютаВзаиморасчетов (дублирование на уровне ДанныеВзаиморасчетов)
         $paymentCurrency = $dom->createElement('ВалютаВзаиморасчетов');
-        $this->append($dom, $contractCurrency, 'Ссылка', $cur->get('link'));
+        $this->append($dom, $paymentCurrency, 'Ссылка', $cur->get('link'));
         $this->append($dom, $paymentCurrency, 'Код', $cur->get('code'));
         $this->append($dom, $paymentCurrency, 'Наименование', $cur->get('name'));
         $paymentData->appendChild($paymentCurrency);
 
         $this->append($dom, $paymentData, 'КурсВзаиморасчетов', '1');
         $this->append($dom, $paymentData, 'КратностьВзаиморасчетов', '1');
-        $this->append($dom, $paymentData, 'РасчетыВУсловныхЕдиницах', $ctr->get('calculationsInConditionalUnits'));
         $document->appendChild($paymentData);
 
         // Заказ
