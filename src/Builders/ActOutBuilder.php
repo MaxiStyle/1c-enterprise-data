@@ -134,9 +134,9 @@ class ActOutBuilder extends DocumentBuilder implements DocumentBuilderInterface
         $document->appendChild($counterparty);
 
         // ДанныеВзаиморасчетов
-        if ($act->get('contract') !== null) {
-            $paymentData = $dom->createElement('ДанныеВзаиморасчетов');
+        $paymentData = $dom->createElement('ДанныеВзаиморасчетов');
 
+        if ($act->get('contract') !== null) {
             // Договор
             $contract = $dom->createElement('Договор');
             $ctr = $act->get('contract');
@@ -180,20 +180,19 @@ class ActOutBuilder extends DocumentBuilder implements DocumentBuilderInterface
             $this->append($dom, $contract, 'Дата', $ctr->get('date'));
             $this->append($dom, $contract, 'Номер', $ctr->get('number'));
             $paymentData->appendChild($contract);
-
-            // ВалютаВзаиморасчетов (дублирование на уровне ДанныеВзаиморасчетов)
-            $paymentCurrency = $dom->createElement('ВалютаВзаиморасчетов');
-            $this->append($dom, $contractCurrency, 'Ссылка', $cur->get('link'));
-            $this->append($dom, $paymentCurrency, 'Код', $cur->get('code'));
-            $this->append($dom, $paymentCurrency, 'Наименование', $cur->get('name'));
-            $paymentData->appendChild($paymentCurrency);
-
-            $this->append($dom, $paymentData, 'КурсВзаиморасчетов', '1');
-            $this->append($dom, $paymentData, 'КратностьВзаиморасчетов', '1');
-            $this->append($dom, $paymentData, 'РасчетыВУсловныхЕдиницах', $ctr->get('calculationsInConditionalUnits'));
-
-            $document->appendChild($paymentData);
         }
+
+        // ВалютаВзаиморасчетов (дублирование на уровне ДанныеВзаиморасчетов)
+        $paymentCurrency = $dom->createElement('ВалютаВзаиморасчетов');
+        $this->append($dom, $contractCurrency, 'Ссылка', $cur->get('link'));
+        $this->append($dom, $paymentCurrency, 'Код', $cur->get('code'));
+        $this->append($dom, $paymentCurrency, 'Наименование', $cur->get('name'));
+        $paymentData->appendChild($paymentCurrency);
+
+        $this->append($dom, $paymentData, 'КурсВзаиморасчетов', '1');
+        $this->append($dom, $paymentData, 'КратностьВзаиморасчетов', '1');
+        $this->append($dom, $paymentData, 'РасчетыВУсловныхЕдиницах', $ctr->get('calculationsInConditionalUnits'));
+        $document->appendChild($paymentData);
 
         // Заказ
         if ($act->get('order') !== null) {
